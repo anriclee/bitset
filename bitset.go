@@ -2,7 +2,6 @@ package bitset
 
 import (
 	"errors"
-	"math/bits"
 )
 
 type BitSet []byte
@@ -25,22 +24,13 @@ func (bs BitSet) SetBit(bitPos int64) error {
 	if bitPos > bs.Len() {
 		return errors.New("bit pos out of range")
 	}
-	bs[bitPos>>3] |= 1 << (bitPos & 7)
+	bs[bitPos>>3] |= 1 << (7 - bitPos&7)
 	return nil
-}
-
-// RevertByteBits ... output a new BitSet which reverts bits in every byte element
-func (bs BitSet) RevertByteBits() BitSet {
-	dst := make(BitSet, len(bs))
-	for i, b := range bs {
-		dst[i] = bits.Reverse8(b)
-	}
-	return dst
 }
 
 func (bs BitSet) IsBitSet(bitPos int64) bool {
 	if bitPos > bs.Len() {
 		return false
 	}
-	return bs[bitPos>>3]&(1<<(bitPos&7)) != 0
+	return bs[bitPos>>3]&(1<<(7-bitPos&7)) != 0
 }

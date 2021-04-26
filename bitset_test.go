@@ -57,14 +57,3 @@ func TestBitSet_SetBit(t *testing.T) {
 		require.False(t, res)
 	}
 }
-
-func TestBitSet_Revert(t *testing.T) {
-	setPos := 2
-	set := NewBitSet(int64(80))
-
-	err := set.SetBit(int64(setPos))
-	require.Nil(t, err)
-
-	reversed := set.RevertByteBits()
-	require.True(t, reversed.IsBitSet(5))
-}
