@@ -1,2 +1,2 @@
 # bitset
-bitset golang implementation
+A bitset golang implementation like redis bit ops
